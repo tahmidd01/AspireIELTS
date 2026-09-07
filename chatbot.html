@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <style>
+        /* Simple styles for the chatbot */
+        #chatbox {
+            width: 300px;
+            height: 400px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        #messages {
+            margin-bottom: 20px;
+        }
+        #userMessage {
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>AI Chatbot</h2>
+    <div id="chatbox">
+        <div id="messages"></div>
+    </div>
+    <input type="text" id="userMessage" placeholder="Type a message..." />
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        function sendMessage() {
+            const userMessage = document.getElementById('userMessage').value;
+            const messagesContainer = document.getElementById('messages');
+
+            // Display the user's message
+            messagesContainer.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+            document.getElementById('userMessage').value = ''; // Clear the input
+
+            // Send the message to the backend via fetch
+            fetch('chatbot.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `message=${encodeURIComponent(userMessage)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the bot's response
+                messagesContainer.innerHTML += `<p><strong>Bot:</strong> ${data.reply}</p>`;
+                messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll to the latest message
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+</body>
+</html>

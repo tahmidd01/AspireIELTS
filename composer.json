@@ -1,0 +1,24 @@
+{
+  "name": "tahmid/aspire-ielts",
+  "description": "AspireIELTS project with OpenAI GPT integration.",
+  "type": "project",
+  "require": {
+    "symfony/http-client": "^7.2",
+    "nyholm/psr7": "^1.8",
+    "openai/openai": "dev-main",
+    "vlucas/phpdotenv": "^5.6",
+    "openai-php/client": "^0.12.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
+  }
+}
